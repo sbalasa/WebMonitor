@@ -1,5 +1,5 @@
 """
-Runner to monitor website monitoring for every 30 mints and generate metrics.
+Runner to monitor website for every 30 mints and generate metrics.
 Author: Santhosh Balasa
 Email: santhosh.kbr@gmail.com
 Date: 17/May/2021
