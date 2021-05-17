@@ -22,6 +22,7 @@ logging.basicConfig(
 )
 
 
+# Global
 HTML_FILE_NAME = "python.html"
 
 
