@@ -16,10 +16,11 @@ import datetime
 from urllib import request, error
 
 logging.basicConfig(
-    format=f"%(asctime)s %(levelname)-8s %(message)s",
+    format=f"%(asctime)s %(name)s %(levelname)-8s %(message)s",
     level=logging.INFO,
     datefmt="%Y-%m-%d %H:%M:%S",
 )
+logger = logging.getLogger(__name__)
 
 # Global
 HTML_FILE_NAME = "python.html"
@@ -40,19 +41,19 @@ def fetch_html(url_link, s):
         end = datetime.datetime.now()
         delta = end - start
     except error.HTTPError as e:
-        logging.error(f"HTTP Error: {e.code}")
+        logger.error(f"HTTP Error: {e.code}")
     except error.URLError as e:
-        logging.error(f"URL Error: {e.reason}")
-        logging.info(f"Please verify the URL, Exiting...")
+        logger.error(f"URL Error: {e.reason}")
+        logger.info(f"Please verify the URL, Exiting...")
         sys.exit(-1)
     else:
-        logging.info(f"Connection Successful, Status: {url.status}")
-        logging.info(f"Elapsed Time: {round(delta.microseconds * .000001, 6)}s")
+        logger.info(f"Connection Successful, Status: {url.status}")
+        logger.info(f"Elapsed Time: {round(delta.microseconds * .000001, 6)}s")
         if url.status == 200:
             with open(HTML_FILE_NAME, "w") as f:
                 for i in url.readlines():
                     f.write(i.decode("utf-8"))
-            logging.info(f"Html File is successfully created: {HTML_FILE_NAME}")
+            logger.info(f"Html File is successfully created: {HTML_FILE_NAME}")
     s.enter(
         60 * TIME_INTERVAL,
         1,
