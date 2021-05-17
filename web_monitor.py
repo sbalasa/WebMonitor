@@ -21,7 +21,6 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-
 # Global
 HTML_FILE_NAME = "python.html"
 
