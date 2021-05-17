@@ -1,3 +1,10 @@
+"""
+Runner to monitor website monitoring for every 30 mints and generate metrics.
+Author: Santhosh Balasa
+Email: santhosh.kbr@gmail.com
+Date: 17/May/2021
+"""
+
 import time
 import sched
 import click
@@ -10,6 +17,13 @@ HTML_FILE_NAME = "python.html"
 
 
 def fetch_html(url_link, s):
+    """
+    Function to check the website and generate html file.
+
+    Args:
+        url_link (str): Website name to be monitored
+        s (sched.scheduler): scheduler object
+    """
     try:
         start = datetime.datetime.now()
         url = request.urlopen(f"http://{url_link}")
@@ -45,6 +59,12 @@ def fetch_html(url_link, s):
     help="Pass the URL to be monitored every 30 mints",
 )
 def main(url):
+    """
+    WBT: Website Monitoring Tool
+        This tool is used to monitor a website for every 30 mints and generate metrics.
+    Args:
+        url (str): Website name to be monitored
+    """
     s = sched.scheduler(time.time, time.sleep)
     fetch_html(url, s)
     # Run web monitoring evey 30 mints
