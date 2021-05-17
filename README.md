@@ -1,4 +1,5 @@
 # WebMonitor
+## WBT: Website Monitoring Tool
 This is a tool which monitors website availability over the network for every 30 minutes, produces metrics about this and passes these events through an Aiven Kafka instance into an Aiven PostgreSQL database.
 
 ## To Prepare Environment
