@@ -6,6 +6,7 @@ Email: santhosh.kbr@gmail.com
 Date: 17/May/2021
 """
 
+import sys
 import time
 import sched
 import click
@@ -42,6 +43,8 @@ def fetch_html(url_link, s):
         logging.error(f"HTTP Error: {e.code}")
     except error.URLError as e:
         logging.error(f"URL Error: {e.reason}")
+        logging.info(f"Please verify the URL, Exiting...")
+        sys.exit(-1)
     else:
         logging.info(f"Connection Successful, Status: {url.status}")
         logging.info(f"Elapsed Time: {round(delta.microseconds * .000001, 6)}s")
