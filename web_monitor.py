@@ -24,6 +24,7 @@ logging.basicConfig(
 
 # Global
 HTML_FILE_NAME = "python.html"
+TIME_INTERVAL = 30  # In minutes
 
 
 def fetch_html(url_link, s):
@@ -54,7 +55,7 @@ def fetch_html(url_link, s):
                     f.write(i.decode("utf-8"))
             logging.info(f"Html File is successfully created: {HTML_FILE_NAME}")
     s.enter(
-        60 * 30,
+        60 * TIME_INTERVAL,
         1,
         fetch_html,
         (
@@ -81,7 +82,7 @@ def main(url):
     fetch_html(url, s)
     # Run web monitoring evey 30 mints
     s.enter(
-        60 * 30,
+        60 * TIME_INTERVAL,
         1,
         fetch_html,
         (
