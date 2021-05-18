@@ -1,0 +1,11 @@
+Apache Kafka
+
+1. Kafka Python Client: https://kafka-python.readthedocs.io/en/master/index.html
+2. Aiven kafka client example: https://aiven.io/blog/create-your-own-data-stream-for-kafka-with-python-and-faker
+3. Aiven github kafka example: https://github.com/aiven/aiven-examples/tree/master/kafka/python
+
+PostgreSQL 
+
+1. Aiven github PostgreSQL example: https://github.com/aiven/aiven-examples/tree/master/postgresql/python
+2. PostgresSQL Data types: https://www.postgresql.org/docs/9.5/datatype.html
+3. PostgreSQL Titorial: https://www.tutorialspoint.com/postgresql/postgresql_python.htm
