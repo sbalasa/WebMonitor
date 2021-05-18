@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Runner to monitor website for every 30 mints and generate metrics.
 
@@ -26,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 # Global
 HTML_FILE_NAME = "python.html"
-TIME_INTERVAL = 1  # In minutes
+TIME_INTERVAL = 30  # In minutes
 BOOTSRAP_SERVER = "kafka-48ac8c2-santee-fabb.aivencloud.com:12059"
 KAFKA_TOPIC = "website_checker"
 
@@ -80,6 +81,8 @@ def fetch_html(url_link, s):
                 "elapsed_time": elapsed_time,
             },
         )
+        # Wait for all messages to be sent
+        producer.flush()
 
     s.enter(
         60 * TIME_INTERVAL,
