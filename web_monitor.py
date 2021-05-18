@@ -43,8 +43,6 @@ producer = KafkaProducer(
 )
 
 
-
-
 def fetch_html(url_link, s):
     """
     Function to check the website and generate html file.
