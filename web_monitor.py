@@ -8,11 +8,13 @@ Date: 17/May/2021
 
 import sys
 import time
+import json
 import sched
 import click
 import logging
-import datetime
 
+from datetime import datetime
+from kafka import KafkaProducer
 from urllib import request, error
 
 logging.basicConfig(
@@ -24,7 +26,23 @@ logger = logging.getLogger(__name__)
 
 # Global
 HTML_FILE_NAME = "python.html"
-TIME_INTERVAL = 30  # In minutes
+TIME_INTERVAL = 1  # In minutes
+BOOTSRAP_SERVER = "kafka-48ac8c2-santee-fabb.aivencloud.com:12059"
+KAFKA_TOPIC = "website_checker"
+
+
+# Kafka Producer
+producer = KafkaProducer(
+    bootstrap_servers=BOOTSRAP_SERVER,
+    security_protocol="SSL",
+    ssl_cafile="kafkaCerts/ca.pem",
+    ssl_certfile="kafkaCerts/service.cert",
+    ssl_keyfile="kafkaCerts/service.key",
+    value_serializer=lambda v: json.dumps(v).encode("ascii"),
+    key_serializer=lambda v: json.dumps(v).encode("ascii"),
+)
+
+
 
 
 def fetch_html(url_link, s):
@@ -36,9 +54,9 @@ def fetch_html(url_link, s):
         s (sched.scheduler): scheduler object
     """
     try:
-        start = datetime.datetime.now()
+        start = datetime.now()
         url = request.urlopen(f"http://{url_link}")
-        end = datetime.datetime.now()
+        end = datetime.now()
         delta = end - start
     except error.HTTPError as e:
         logger.error(f"HTTP Error: {e.code}")
@@ -48,12 +66,23 @@ def fetch_html(url_link, s):
         sys.exit(-1)
     else:
         logger.info(f"Connection Successful, Status: {url.status}")
-        logger.info(f"Elapsed Time: {round(delta.microseconds * .000001, 6)}s")
+        elapsed_time = round(delta.microseconds * 0.000001, 6)
+        logger.info(f"Elapsed Time: {elapsed_time}s")
         if url.status == 200:
             with open(HTML_FILE_NAME, "w") as f:
                 for i in url.readlines():
                     f.write(i.decode("utf-8"))
             logger.info(f"Html File is successfully created: {HTML_FILE_NAME}")
+        producer.send(
+            KAFKA_TOPIC,
+            key={"time": str(datetime.now())},
+            value={
+                "url": url_link,
+                "status": url.status,
+                "elapsed_time": elapsed_time,
+            },
+        )
+
     s.enter(
         60 * TIME_INTERVAL,
         1,
