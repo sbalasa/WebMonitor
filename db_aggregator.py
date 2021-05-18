@@ -9,7 +9,6 @@ Date: 18/May/2021
 
 import logging
 
-from pprint import pprint
 from kafka import KafkaConsumer
 
 logging.basicConfig(
@@ -42,7 +41,7 @@ def main():
     """
     logger.info("Kafka Consumption Begins...")
     for c in consumer:
-        pprint(c.value.decode("utf-8"))
+        print(c.key.decode("utf-8"), "->", c.value.decode("utf-8"))
     consumer.close()
 
 
