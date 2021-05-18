@@ -56,7 +56,6 @@ cursor.execute(
         DATETIME TEXT NOT NULL
     );"""
 )
-
 cursor.execute(
     """CREATE TABLE VALUES(
         ID INT PRIMARY KEY NOT NULL,
