@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Database Aggregator from a Kafka Consumer.
 
@@ -41,7 +42,8 @@ def main():
     """
     logger.info("Kafka Consumption Begins...")
     for c in consumer:
-        pprint(c)
+        pprint(c.value.decode("utf-8"))
+    consumer.close()
 
 
 if __name__ == "__main__":
